@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/priyadharsinimvp-bit/ultimate-devops-project-aws.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Build started'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                echo 'Running SonarQube analysis'
+            }
+        }
+    }
+}
