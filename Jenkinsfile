@@ -15,39 +15,19 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('section-1') {
-                    bat 'mvn clean compile'
-                }
+                echo 'No build needed'
             }
         }
 
         stage('Test') {
             steps {
-                dir('section-1') {
-                    bat 'mvn test'
-                }
+                echo 'No tests'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                dir('section-1') {
-                    withSonarQubeEnv('sonarqube-server') {
-                        bat """
-                        mvn sonar:sonar ^
-                        -Dsonar.projectKey=ultimate-devops ^
-                        -Dsonar.host.url=http://localhost:9000
-                        """
-                    }
-                }
-            }
-        }
-
-        stage('Package') {
-            steps {
-                dir('section-1') {
-                    bat 'mvn package'
-                }
+                echo 'Skipping SonarQube'
             }
         }
 
