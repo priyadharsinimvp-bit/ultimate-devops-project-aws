@@ -12,8 +12,8 @@ pipeline {
         stage('Build') {
             steps {
                 dir('section-1') {
-                    bat 'echo Building project...'
-                    bat 'timeout /t 5'
+                    echo 'Building project...'
+                    sleep 5
                 }
             }
         }
@@ -21,30 +21,32 @@ pipeline {
         stage('Test') {
             steps {
                 dir('section-1') {
-                    bat 'echo Running tests...'
-                    bat 'timeout /t 5'
+                    echo 'Running tests...'
+                    sleep 5
                 }
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                bat 'echo Running SonarQube...'
-                bat 'timeout /t 5'
+                echo 'Running SonarQube...'
+                sleep 5
             }
         }
 
         stage('Package') {
             steps {
-                bat 'echo Packaging...'
-                bat 'timeout /t 5'
+                dir('section-1') {
+                    echo 'Packaging...'
+                    sleep 5
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                bat 'echo Deploying...'
-                bat 'timeout /t 5'
+                echo 'Deploying...'
+                sleep 5
             }
         }
     }
