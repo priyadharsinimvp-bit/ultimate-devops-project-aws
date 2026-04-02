@@ -1,35 +1,47 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven'
+    }
+
     stages {
 
         stage('Build') {
             steps {
-                bat 'mvn clean compile'
+                dir('section-1') {   // 👈 CHANGE THIS
+                    bat 'mvn clean compile'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                bat 'mvn test'
+                dir('section-1') {
+                    bat 'mvn test'
+                }
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube-server') {
-                    bat '''
-                    mvn sonar:sonar ^
-                    -Dsonar.projectKey=ultimate-devops ^
-                    -Dsonar.host.url=http://localhost:9000
-                    '''
+                dir('section-1') {
+                    withSonarQubeEnv('sonarqube-server') {
+                        bat '''
+                        mvn sonar:sonar ^
+                        -Dsonar.projectKey=ultimate-devops ^
+                        -Dsonar.host.url=http://localhost:9000
+                        '''
+                    }
                 }
             }
         }
 
         stage('Package') {
             steps {
-                bat 'mvn package'
+                dir('section-1') {
+                    bat 'mvn package'
+                }
             }
         }
 
