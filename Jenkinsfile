@@ -5,22 +5,22 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean compile'
+                bat 'mvn clean compile'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube-server') {
-                    sh '''
-                    mvn sonar:sonar \
-                    -Dsonar.projectKey=ultimate-devops \
+                    bat '''
+                    mvn sonar:sonar ^
+                    -Dsonar.projectKey=ultimate-devops ^
                     -Dsonar.host.url=http://localhost:9000
                     '''
                 }
@@ -29,13 +29,13 @@ pipeline {
 
         stage('Package') {
             steps {
-                sh 'mvn package'
+                bat 'mvn package'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploy step (can add Nginx or Docker later)'
+                echo 'Deploy step'
             }
         }
     }
