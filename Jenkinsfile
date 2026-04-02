@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3'
+        maven 'Maven'
     }
 
     stages {
@@ -45,7 +45,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploy step (Nginx later)'
+                echo 'Deploy step (Nginx next)'
             }
         }
     }
