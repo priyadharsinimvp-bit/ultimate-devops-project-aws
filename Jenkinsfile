@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    options {
-        skipDefaultCheckout(true)
-    }
-
     stages {
 
         stage('Checkout') {
@@ -15,25 +11,40 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'No build needed'
+                dir('section-1') {
+                    bat 'echo Building project...'
+                    bat 'timeout /t 5'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                echo 'No tests'
+                dir('section-1') {
+                    bat 'echo Running tests...'
+                    bat 'timeout /t 5'
+                }
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                echo 'Skipping SonarQube'
+                bat 'echo Running SonarQube...'
+                bat 'timeout /t 5'
+            }
+        }
+
+        stage('Package') {
+            steps {
+                bat 'echo Packaging...'
+                bat 'timeout /t 5'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploy step'
+                bat 'echo Deploying...'
+                bat 'timeout /t 5'
             }
         }
     }
