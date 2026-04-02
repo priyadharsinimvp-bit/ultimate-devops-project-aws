@@ -5,35 +5,51 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/priyadharsinimvp-bit/ultimate-devops-project-aws.git'
+                git branch: 'main', url: 'https://github.com/priyadharsinimvp-bit/ultimate-devops-project-aws.git'
             }
         }
 
-        stage('Verify Project') {
-            steps {
-                echo "This is a Terraform/DevOps project. No Maven build needed."
-            }
-        }
-
-        stage('Terraform Init') {
+        stage('Build') {
             steps {
                 dir('section-1') {
-                    bat 'terraform init'
+                    bat 'mvn clean compile'
                 }
             }
         }
 
-        stage('Terraform Plan') {
+        stage('Test') {
             steps {
                 dir('section-1') {
-                    bat 'terraform plan'
+                    bat 'mvn test'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                dir('section-1') {
+                    withSonarQubeEnv('sonarqube-server') {
+                        bat """
+                        mvn sonar:sonar ^
+                        -Dsonar.projectKey=ultimate-devops ^
+                        -Dsonar.host.url=http://localhost:9000
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Package') {
+            steps {
+                dir('section-1') {
+                    bat 'mvn package'
                 }
             }
         }
 
         stage('Deploy') {
             steps {
-                echo "Deployment step placeholder"
+                echo 'Deploy step'
             }
         }
     }
