@@ -3,12 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/priyadharsinimvp-bit/ultimate-devops-project-aws.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 sh 'mvn clean compile'
@@ -26,7 +20,7 @@ pipeline {
                 withSonarQubeEnv('sonarqube-server') {
                     sh '''
                     mvn sonar:sonar \
-                    -Dsonar.projectKey=ultimate-devops-project \
+                    -Dsonar.projectKey=ultimate-devops \
                     -Dsonar.host.url=http://localhost:9000
                     '''
                 }
@@ -41,7 +35,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploy step (Nginx next)'
+                echo 'Deploy step (can add Nginx or Docker later)'
             }
         }
     }
